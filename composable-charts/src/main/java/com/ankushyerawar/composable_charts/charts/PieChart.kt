@@ -17,6 +17,7 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.ankushyerawar.composable_charts.charts.Constants.Companion.ARC_DIVIDER
+import com.ankushyerawar.composable_charts.charts.Constants.Companion.EXTRA_WEIGHT
 import com.ankushyerawar.composable_charts.charts.Constants.Companion.SHOW_TEXT_ANGLE
 import com.ankushyerawar.composable_charts.charts.Constants.Companion.START_ANGLE_0
 import com.ankushyerawar.composable_charts.charts.Constants.Companion.START_ANGLE_180
@@ -72,9 +73,9 @@ fun PieChart(
 
                     // Calculate the x & y co-ordinates to show the percentage text
                     val x =
-                        (maxWidth + 0.dp / ARC_DIVIDER).value * cos(Math.toRadians(arcCenter.toDouble())) + size.center.x + 20
+                        (maxWidth + 0.dp / ARC_DIVIDER).value * cos(Math.toRadians(arcCenter.toDouble())) + size.center.x + EXTRA_WEIGHT
                     val y =
-                        (maxWidth + 0.dp / ARC_DIVIDER).value * sin(Math.toRadians(arcCenter.toDouble())) + size.center.y + 20
+                        (maxWidth + 0.dp / ARC_DIVIDER).value * sin(Math.toRadians(arcCenter.toDouble())) + size.center.y + EXTRA_WEIGHT
 
                     drawIntoCanvas {
                         it.nativeCanvas.drawText(

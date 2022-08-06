@@ -15,5 +15,6 @@ internal class Constants {
         const val TOTAL_PERCENT = 100
         const val TOTAL_ANGLE_DEGREE = 360
         const val ARC_DIVIDER = 2
+        const val EXTRA_WEIGHT = 20
     }
 }
