@@ -12,55 +12,113 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.dimensionResource
-import androidx.compose.ui.tooling.preview.Preview
-import com.ankushyerawar.charts.MainActivity.Companion.ROW_WEIGHT
-import com.ankushyerawar.charts.MainActivity.Companion.TEXT_SIZE
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.sp
 import com.ankushyerawar.charts.ui.theme.BlueGray600
 import com.ankushyerawar.charts.ui.theme.ChartsTheme
 import com.ankushyerawar.charts.ui.theme.Green800
 import com.ankushyerawar.charts.ui.theme.Indigo600
 import com.ankushyerawar.charts.ui.theme.Orange800
 import com.ankushyerawar.charts.ui.theme.Purple200
+import com.ankushyerawar.charts.ui.theme.Purple500
 import com.ankushyerawar.composable_charts.charts.Angle
+import com.ankushyerawar.composable_charts.charts.ChartProperties
 import com.ankushyerawar.composable_charts.charts.PieChart
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        val properties = ChartProperties(
+            percentList = getPercentageList(),
+            colorList = getColorList()
+        )
         setContent {
             ChartsTheme {
                 // A surface container using the 'background' color from the theme
                 Column(
                     modifier = Modifier
                         .fillMaxSize()
+                        .verticalScroll(rememberScrollState())
                         .background(MaterialTheme.colors.background)
+                        .padding(bottom = dimensionResource(id = R.dimen.padding_big))
                 ) {
+                    PieHeading(stringResource(id = R.string.normal_pie_chart))
+
                     Box(
                         modifier = Modifier
-                            .padding(dimensionResource(id = R.dimen.padding_big))
+                            .padding(
+                                start = dimensionResource(id = R.dimen.padding_big),
+                                end = dimensionResource(id = R.dimen.padding_big)
+                            )
                     ) {
                         PieChart(
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .wrapContentHeight(),
-                            percentList = getPercentageList(),
-                            colorList = getColorList(),
-                            showPercentage = true
+                            properties = properties
                         )
                     }
+
+                    PieHeading(stringResource(id = R.string.text_pie_chart))
+
+                    Box(
+                        modifier = Modifier
+                            .padding(
+                                start = dimensionResource(id = R.dimen.padding_big),
+                                end = dimensionResource(id = R.dimen.padding_big)
+                            )
+                    ) {
+                        PieChart(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .wrapContentHeight(),
+                            properties = properties.copy(
+                                showPercentage = true,
+                                showPercentSymbol = false
+                            )
+                        )
+                    }
+
+                    PieHeading(stringResource(id = R.string.symbol_pie_chart))
+
+                    Box(
+                        modifier = Modifier
+                            .padding(
+                                start = dimensionResource(id = R.dimen.padding_big),
+                                end = dimensionResource(id = R.dimen.padding_big)
+                            )
+                    ) {
+                        PieChart(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .wrapContentHeight(),
+                            properties = properties.copy(
+                                showPercentage = true
+                            )
+                        )
+                    }
+
+                    PieHeading(stringResource(id = R.string.percent_pie_small))
 
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(
-                                top = dimensionResource(id = R.dimen.padding_big),
-                                start = dimensionResource(id = R.dimen.padding_start_end_medium),
-                                end = dimensionResource(id = R.dimen.padding_start_end_medium)
+                                start = dimensionResource(id = R.dimen.padding_big),
+                                end = dimensionResource(id = R.dimen.padding_big)
                             ),
                         horizontalArrangement = Arrangement.SpaceEvenly
                     ) {
@@ -70,11 +128,11 @@ class MainActivity : ComponentActivity() {
                                 .padding(end = dimensionResource(id = R.dimen.padding_start_end_small))
                                 .wrapContentHeight()
                                 .weight(ROW_WEIGHT),
-                            percentList = getPercentageList(),
-                            colorList = getColorList(),
-                            showPercentage = true,
-                            startAngle = Angle.ANGLE_0,
-                            percentTextSize = TEXT_SIZE
+                            properties = properties.copy(
+                                showPercentage = true,
+                                startAngle = Angle.ANGLE_0,
+                                percentTextSize = TEXT_SIZE
+                            )
                         )
 
                         PieChart(
@@ -83,11 +141,12 @@ class MainActivity : ComponentActivity() {
                                 .wrapContentHeight()
                                 .padding(start = dimensionResource(id = R.dimen.padding_start_end_small))
                                 .weight(ROW_WEIGHT),
-                            percentList = getPercentageList(),
-                            colorList = getColorList(),
-                            showPercentage = true,
-                            startAngle = Angle.ANGLE_0,
-                            percentTextSize = TEXT_SIZE
+                            properties = properties.copy(
+                                showPercentage = true,
+                                showPercentSymbol = false,
+                                startAngle = Angle.ANGLE_90,
+                                percentTextSize = TEXT_SIZE
+                            )
                         )
                     }
                 }
@@ -101,65 +160,23 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-@Preview(showBackground = true)
 @Composable
-fun Renderer() {
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(MaterialTheme.colors.background)
+fun PieHeading(heading: String) {
+    Row(modifier = Modifier
+        .fillMaxWidth()
+        .padding(dimensionResource(id = R.dimen.padding_big))
     ) {
-        Box(
-            modifier = Modifier
-                .padding(dimensionResource(id = R.dimen.padding_big))
-        ) {
-            PieChart(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .wrapContentHeight(),
-                percentList = getPercentageList(),
-                colorList = getColorList(),
-                showPercentage = true
+        Text(
+            modifier = Modifier.fillMaxWidth(),
+            text = heading,
+            textAlign = TextAlign.Center,
+            style = TextStyle(
+                color = Purple500,
+                fontWeight = FontWeight.Bold,
+                fontStyle = FontStyle.Italic,
+                fontSize = dimensionResource(id = R.dimen.heading_text).value.sp
             )
-        }
-
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(
-                    top = dimensionResource(id = R.dimen.padding_big),
-                    start = dimensionResource(id = R.dimen.padding_start_end_medium),
-                    end = dimensionResource(id = R.dimen.padding_start_end_medium)
-                ),
-            horizontalArrangement = Arrangement.SpaceEvenly
-        ) {
-            PieChart(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(end = dimensionResource(id = R.dimen.padding_start_end_small))
-                    .wrapContentHeight()
-                    .weight(ROW_WEIGHT),
-                percentList = getPercentageList(),
-                colorList = getColorList(),
-                showPercentage = true,
-                startAngle = Angle.ANGLE_0,
-                percentTextSize = TEXT_SIZE
-            )
-
-            PieChart(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .wrapContentHeight()
-                    .padding(start = dimensionResource(id = R.dimen.padding_start_end_small))
-                    .weight(ROW_WEIGHT),
-                percentList = getPercentageList(),
-                colorList = getColorList(),
-                showPercentage = true,
-                showPercentSymbol = false,
-                startAngle = Angle.ANGLE_0,
-                percentTextSize = TEXT_SIZE
-            )
-        }
+        )
     }
 }
 

@@ -18,7 +18,7 @@ internal class Constants {
         const val EXTRA_WEIGHT = 10
 
         //Pie Text Property
-        const val ADDED_WIDTH = 8
+        const val ADDED_WIDTH = 5
         const val TEXT_SIZE = 18
     }
 }
