@@ -63,7 +63,7 @@ class MainActivity : ComponentActivity() {
                                 .fillMaxWidth()
                                 .padding(end = 5.dp)
                                 .wrapContentHeight()
-                                .weight(1f),
+                                .weight(ROW_WEIGHT),
                             percentList = getPercentageList(),
                             colorList = getColorList(),
                             showPercentage = true,
@@ -76,7 +76,7 @@ class MainActivity : ComponentActivity() {
                                 .fillMaxWidth()
                                 .wrapContentHeight()
                                 .padding(start = 5.dp)
-                                .weight(1f),
+                                .weight(ROW_WEIGHT),
                             percentList = getPercentageList(),
                             colorList = getColorList(),
                             showPercentage = true,
@@ -87,6 +87,10 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
+    }
+
+    companion object {
+        const val ROW_WEIGHT = 1f
     }
 }
 
