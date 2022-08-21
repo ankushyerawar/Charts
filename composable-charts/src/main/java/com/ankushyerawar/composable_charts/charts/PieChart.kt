@@ -38,6 +38,7 @@ fun PieChart(
     percentList: List<Float>,
     colorList: List<Color>,
     showPercentage: Boolean = false,
+    showPercentSymbol: Boolean = true,
     startAngle: Angle = Angle.ANGLE_270,
     percentTextColor: Color = Color.White,
     percentTextSize: Int = TEXT_SIZE
@@ -90,7 +91,7 @@ fun PieChart(
 
                     drawIntoCanvas {
                         it.nativeCanvas.drawText(
-                            "${percent.roundToInt()}%",
+                            "${percent.roundToInt()}${showPercentSymbol(showPercentSymbol)}",
                             x.toFloat(),
                             y.toFloat(),
                             Paint().apply {
@@ -142,6 +143,14 @@ private fun getTextYPosition(
             arcCenter.toDouble()
         )
     ) + size.center.y + extraWeight
+}
+
+private fun showPercentSymbol(show: Boolean): String {
+    return if (show) {
+       "%"
+    } else {
+        ""
+    }
 }
 
 

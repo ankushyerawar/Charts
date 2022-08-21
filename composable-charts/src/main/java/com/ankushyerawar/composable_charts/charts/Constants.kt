@@ -15,10 +15,10 @@ internal class Constants {
         const val TOTAL_PERCENT = 100
         const val TOTAL_ANGLE_DEGREE = 360
         const val ARC_DIVIDER = 2
-        const val EXTRA_WEIGHT = 20
+        const val EXTRA_WEIGHT = 10
 
         //Pie Text Property
-        const val ADDED_WIDTH = 0
+        const val ADDED_WIDTH = 8
         const val TEXT_SIZE = 18
     }
 }

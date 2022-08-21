@@ -16,8 +16,10 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
+import com.ankushyerawar.charts.MainActivity.Companion.ROW_WEIGHT
+import com.ankushyerawar.charts.MainActivity.Companion.TEXT_SIZE
 import com.ankushyerawar.charts.ui.theme.BlueGray600
 import com.ankushyerawar.charts.ui.theme.ChartsTheme
 import com.ankushyerawar.charts.ui.theme.Green800
@@ -40,7 +42,7 @@ class MainActivity : ComponentActivity() {
                 ) {
                     Box(
                         modifier = Modifier
-                            .padding(20.dp)
+                            .padding(dimensionResource(id = R.dimen.padding_big))
                     ) {
                         PieChart(
                             modifier = Modifier
@@ -55,33 +57,37 @@ class MainActivity : ComponentActivity() {
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(top = 20.dp, start = 10.dp, end = 10.dp),
+                            .padding(
+                                top = dimensionResource(id = R.dimen.padding_big),
+                                start = dimensionResource(id = R.dimen.padding_start_end_medium),
+                                end = dimensionResource(id = R.dimen.padding_start_end_medium)
+                            ),
                         horizontalArrangement = Arrangement.SpaceEvenly
                     ) {
                         PieChart(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(end = 5.dp)
+                                .padding(end = dimensionResource(id = R.dimen.padding_start_end_small))
                                 .wrapContentHeight()
                                 .weight(ROW_WEIGHT),
                             percentList = getPercentageList(),
                             colorList = getColorList(),
                             showPercentage = true,
                             startAngle = Angle.ANGLE_0,
-                            percentTextSize = 12
+                            percentTextSize = TEXT_SIZE
                         )
 
                         PieChart(
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .wrapContentHeight()
-                                .padding(start = 5.dp)
+                                .padding(start = dimensionResource(id = R.dimen.padding_start_end_small))
                                 .weight(ROW_WEIGHT),
                             percentList = getPercentageList(),
                             colorList = getColorList(),
                             showPercentage = true,
                             startAngle = Angle.ANGLE_0,
-                            percentTextSize = 12
+                            percentTextSize = TEXT_SIZE
                         )
                     }
                 }
@@ -91,6 +97,7 @@ class MainActivity : ComponentActivity() {
 
     companion object {
         const val ROW_WEIGHT = 1f
+        const val TEXT_SIZE = 12
     }
 }
 
@@ -104,7 +111,7 @@ fun Renderer() {
     ) {
         Box(
             modifier = Modifier
-                .padding(20.dp)
+                .padding(dimensionResource(id = R.dimen.padding_big))
         ) {
             PieChart(
                 modifier = Modifier
@@ -119,40 +126,45 @@ fun Renderer() {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = 20.dp, start = 10.dp, end = 10.dp),
+                .padding(
+                    top = dimensionResource(id = R.dimen.padding_big),
+                    start = dimensionResource(id = R.dimen.padding_start_end_medium),
+                    end = dimensionResource(id = R.dimen.padding_start_end_medium)
+                ),
             horizontalArrangement = Arrangement.SpaceEvenly
         ) {
             PieChart(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(end = 5.dp)
+                    .padding(end = dimensionResource(id = R.dimen.padding_start_end_small))
                     .wrapContentHeight()
-                    .weight(1f),
+                    .weight(ROW_WEIGHT),
                 percentList = getPercentageList(),
                 colorList = getColorList(),
                 showPercentage = true,
                 startAngle = Angle.ANGLE_0,
-                percentTextSize = 12
+                percentTextSize = TEXT_SIZE
             )
 
             PieChart(
                 modifier = Modifier
                     .fillMaxWidth()
                     .wrapContentHeight()
-                    .padding(start = 5.dp)
-                    .weight(1f),
+                    .padding(start = dimensionResource(id = R.dimen.padding_start_end_small))
+                    .weight(ROW_WEIGHT),
                 percentList = getPercentageList(),
                 colorList = getColorList(),
                 showPercentage = true,
+                showPercentSymbol = false,
                 startAngle = Angle.ANGLE_0,
-                percentTextSize = 12
+                percentTextSize = TEXT_SIZE
             )
         }
     }
 }
 
 private fun getPercentageList(): List<Float> {
-    return listOf(40f, 25f, 10f, 5f, 20f)
+    return listOf(40f, 25f, 10f, 5f, 20f).shuffled()
 }
 
 private fun getColorList(): List<Color> {
