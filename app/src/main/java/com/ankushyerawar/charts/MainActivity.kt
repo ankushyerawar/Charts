@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.ankushyerawar.charts.ui.theme.BlueGray600
@@ -45,14 +46,8 @@ class MainActivity : ComponentActivity() {
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .wrapContentHeight(),
-                            percentList = listOf(40f, 25f, 10f, 5f, 20f),
-                            colorList = listOf(
-                                Indigo600,
-                                Green800,
-                                Orange800,
-                                Purple200,
-                                BlueGray600
-                            ),
+                            percentList = getPercentageList(),
+                            colorList = getColorList(),
                             showPercentage = true
                         )
                     }
@@ -69,14 +64,8 @@ class MainActivity : ComponentActivity() {
                                 .padding(end = 5.dp)
                                 .wrapContentHeight()
                                 .weight(1f),
-                            percentList = listOf(40f, 25f, 10f, 5f, 20f),
-                            colorList = listOf(
-                                Indigo600,
-                                Green800,
-                                Orange800,
-                                Purple200,
-                                BlueGray600
-                            ),
+                            percentList = getPercentageList(),
+                            colorList = getColorList(),
                             showPercentage = true,
                             startAngle = Angle.ANGLE_0,
                             percentTextSize = 12
@@ -88,14 +77,8 @@ class MainActivity : ComponentActivity() {
                                 .wrapContentHeight()
                                 .padding(start = 5.dp)
                                 .weight(1f),
-                            percentList = listOf(40f, 25f, 10f, 5f, 20f),
-                            colorList = listOf(
-                                Indigo600,
-                                Green800,
-                                Orange800,
-                                Purple200,
-                                BlueGray600
-                            ),
+                            percentList = getPercentageList(),
+                            colorList = getColorList(),
                             showPercentage = true,
                             startAngle = Angle.ANGLE_0,
                             percentTextSize = 12
@@ -123,14 +106,8 @@ fun Renderer() {
                 modifier = Modifier
                     .fillMaxWidth()
                     .wrapContentHeight(),
-                percentList = listOf(40f, 25f, 10f, 5f, 20f),
-                colorList = listOf(
-                    Indigo600,
-                    Green800,
-                    Orange800,
-                    Purple200,
-                    BlueGray600
-                ),
+                percentList = getPercentageList(),
+                colorList = getColorList(),
                 showPercentage = true
             )
         }
@@ -147,14 +124,8 @@ fun Renderer() {
                     .padding(end = 5.dp)
                     .wrapContentHeight()
                     .weight(1f),
-                percentList = listOf(40f, 25f, 10f, 5f, 20f),
-                colorList = listOf(
-                    Indigo600,
-                    Green800,
-                    Orange800,
-                    Purple200,
-                    BlueGray600
-                ),
+                percentList = getPercentageList(),
+                colorList = getColorList(),
                 showPercentage = true,
                 startAngle = Angle.ANGLE_0,
                 percentTextSize = 12
@@ -166,18 +137,26 @@ fun Renderer() {
                     .wrapContentHeight()
                     .padding(start = 5.dp)
                     .weight(1f),
-                percentList = listOf(40f, 25f, 10f, 5f, 20f),
-                colorList = listOf(
-                    Indigo600,
-                    Green800,
-                    Orange800,
-                    Purple200,
-                    BlueGray600
-                ),
+                percentList = getPercentageList(),
+                colorList = getColorList(),
                 showPercentage = true,
                 startAngle = Angle.ANGLE_0,
                 percentTextSize = 12
             )
         }
     }
+}
+
+private fun getPercentageList(): List<Float> {
+    return listOf(40f, 25f, 10f, 5f, 20f)
+}
+
+private fun getColorList(): List<Color> {
+    return listOf(
+        Indigo600,
+        Green800,
+        Orange800,
+        Purple200,
+        BlueGray600
+    )
 }
