@@ -35,22 +35,16 @@ import kotlin.math.sin
 @Composable
 fun PieChart(
     modifier: Modifier,
-    percentList: List<Float>,
-    colorList: List<Color>,
-    showPercentage: Boolean = false,
-    showPercentSymbol: Boolean = true,
-    startAngle: Angle = Angle.ANGLE_270,
-    percentTextColor: Color = Color.White,
-    percentTextSize: Int = TEXT_SIZE
+    properties: ChartProperties
 ) {
-    val totalPercentage = percentList.sum()
-    val percentAngle = percentList.map {
+    val totalPercentage = properties.percentList.sum()
+    val percentAngle = properties.percentList.map {
         it * TOTAL_PERCENT / totalPercentage
     }
     val sweepAngle = percentAngle.map {
         it * TOTAL_ANGLE_DEGREE / TOTAL_PERCENT
     }
-    var angle = getAngle(startAngle)
+    var angle = getAngle(properties.startAngle)
 
     BoxWithConstraints(
         modifier = modifier
@@ -63,42 +57,34 @@ fun PieChart(
                 .size(maxWidth, maxWidth)
         ) {
 
-            for ((index, percent) in percentList.withIndex()) {
+            for ((index, percent) in properties.percentList.withIndex()) {
                 // Draws the pie chart
                 drawArc(
-                    color = colorList[index],
+                    color = properties.colorList[index],
                     startAngle = angle,
                     sweepAngle = sweepAngle[index],
                     useCenter = true,
                     size = Size(size.width, size.width)
                 )
 
-                if (showPercentage && percent >= SHOW_TEXT_ANGLE) {
+                if (properties.showPercentage && percent >= SHOW_TEXT_ANGLE) {
                     // Calculate the acr center by measuring the startAngle and middle of sweepAngle
                     val arcCenter = angle + (sweepAngle[index] / ARC_DIVIDER)
 
                     // Calculate the x & y co-ordinates to show the percentage text
-                    val x = if (percentTextSize == TEXT_SIZE) {
-                        getTextXPosition(maxWidth, arcCenter, size)
-                    } else {
-                        getTextXPosition(maxWidth, arcCenter, size, ADDED_WIDTH)
-                    }
-                    val y = if (percentTextSize == TEXT_SIZE) {
-                        getTextYPosition(maxWidth, arcCenter, size)
-                    } else {
-                        getTextYPosition(maxWidth, arcCenter, size, ADDED_WIDTH)
-                    }
+                    val x = getTextXPosition(properties.percentTextSize, maxWidth, arcCenter, size)
+                    val y = getTextYPosition(properties.percentTextSize, maxWidth, arcCenter, size)
 
                     drawIntoCanvas {
                         it.nativeCanvas.drawText(
-                            "${percent.roundToInt()}${showPercentSymbol(showPercentSymbol)}",
+                            "${percent.roundToInt()}${showPercentSymbol(properties.showPercentSymbol)}",
                             x.toFloat(),
                             y.toFloat(),
                             Paint().apply {
                                 isAntiAlias = true
-                                textSize = percentTextSize.sp.toPx()
+                                textSize = properties.percentTextSize.sp.toPx()
                                 textAlign = Paint.Align.CENTER
-                                color = percentTextColor.toArgb()
+                                color = properties.percentTextColor.toArgb()
                             }
                         )
                     }
@@ -120,29 +106,39 @@ private fun getAngle(angle: Angle): Float {
 }
 
 private fun getTextXPosition(
+    textSize: Int,
     totalWidth: Dp,
     arcCenter: Float,
     size: Size,
     extraWeight: Int = EXTRA_WEIGHT
 ): Double {
+    var textWeight = extraWeight
+    if (textSize != TEXT_SIZE) {
+        textWeight = ADDED_WIDTH
+    }
     return (totalWidth + ADDED_WIDTH.dp / ARC_DIVIDER).value * cos(
         Math.toRadians(
             arcCenter.toDouble()
         )
-    ) + size.center.x + extraWeight
+    ) + size.center.x + textWeight
 }
 
 private fun getTextYPosition(
+    textSize: Int,
     totalWidth: Dp,
     arcCenter: Float,
     size: Size,
     extraWeight: Int = EXTRA_WEIGHT
 ): Double {
+    var textWeight = extraWeight
+    if (textSize != TEXT_SIZE) {
+        textWeight = ADDED_WIDTH
+    }
     return (totalWidth + ADDED_WIDTH.dp / ARC_DIVIDER).value * sin(
         Math.toRadians(
             arcCenter.toDouble()
         )
-    ) + size.center.y + extraWeight
+    ) + size.center.y + textWeight
 }
 
 private fun showPercentSymbol(show: Boolean): String {

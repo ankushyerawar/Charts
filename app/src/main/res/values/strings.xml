@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Charts</string>
+
+    <string name="normal_pie_chart">Pie Chart</string>
+    <string name="text_pie_chart">Pie Chart with Text</string>
+    <string name="symbol_pie_chart">Pie Chart with Percentage symbol</string>
+    <string name="percent_pie_small">Small Size Pie Charts</string>
 </resources>
